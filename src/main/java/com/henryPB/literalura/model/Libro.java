@@ -13,7 +13,6 @@ public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String titulo;
 
     @ManyToMany( fetch = FetchType.EAGER)
@@ -23,7 +22,6 @@ public class Libro {
             inverseJoinColumns = @JoinColumn(name = "autor_id")
     )
     private List<Autor> autores;
-
     private List<String> idiomas;
     private Integer totalDescargas;
 
@@ -88,6 +86,7 @@ public class Libro {
 
         return nombres + " " + apellidos;
     }
+
 
     @Override
     public String toString() {

@@ -2,6 +2,9 @@ package com.henryPB.literalura.model;
 import com.henryPB.literalura.dto.DatosAutor;
 import jakarta.persistence.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Entity
 @Table(name = "autores")
 public class Autor {
@@ -13,6 +16,9 @@ public class Autor {
     private String nombreAutor;
     private Integer fechaNacimiento;
     private Integer fechaFallecimiento;
+
+    @ManyToMany(mappedBy = "autores", fetch = FetchType.EAGER)
+    private List<Libro> libros;
 
     public Autor(){}
 
@@ -46,12 +52,44 @@ public class Autor {
         this.fechaFallecimiento = fechaFallecimiento;
     }
 
+    public List<Libro> getLibros() {
+        return libros;
+    }
+
+    public void setLibros(List<Libro> libros) {
+        this.libros = libros;
+    }
+
+    private String invertirNombreAutor(String nombre){
+        if(nombre == null || !nombre.contains(",")){
+            return nombre;
+        }
+
+        String[] partes = nombre.split(",", 2);
+        String apellidos = partes[0].trim();
+        String nombres = partes[1].trim();
+
+        return nombres + " " + apellidos;
+    }
+
     @Override
     public String toString() {
-        return "Autor{" +
-                "nombreAutor='" + nombreAutor + '\'' +
-                ", fechaNacimiento=" + fechaNacimiento +
-                ", fechaFallecimiento=" + fechaFallecimiento +
-                '}';
+
+        return """
+                {
+                nomreAutor: %s
+                fechaNacimiento: %d
+                fechaFallecimiento: %d
+                libros: %s
+                }
+                """.formatted(
+                invertirNombreAutor(nombreAutor),
+                fechaNacimiento,
+                fechaFallecimiento,
+                libros.stream()
+                        .map(Libro::getTitulo)
+                        .toList()
+               );
+
     }
 }

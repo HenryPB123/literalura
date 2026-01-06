@@ -1,7 +1,7 @@
 package com.henryPB.literalura.principal;
 
 import com.henryPB.literalura.util.EjecutaOpcionesDeMenu;
-import com.henryPB.literalura.util.Menu;
+import com.henryPB.literalura.util.Menus;
 import com.henryPB.literalura.util.ValidarInput;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,7 @@ public class Principal {
     private final EjecutaOpcionesDeMenu ejecutaOpcionesDeMenu;
     private final Scanner scanner = new Scanner(System.in);
     private final ValidarInput validador = new ValidarInput();
-    private final Menu menu = new Menu();
+    private final Menus menu = new Menus();
 
     public Principal(EjecutaOpcionesDeMenu ejecutaOpcionesDeMenu){
         this.ejecutaOpcionesDeMenu = ejecutaOpcionesDeMenu;
